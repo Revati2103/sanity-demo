@@ -1,3 +1,5 @@
+import { useRouter } from "next/router"
+
 export async function getServerSideProps(){
   const query = encodeURIComponent(`*[ _type == "book" ]`)
   const projectID = process.env.YOUR_PROJECT_ID
@@ -11,13 +13,14 @@ export async function getServerSideProps(){
 }
 
 export default function Home({ book }) {
+  const router = useRouter()
   return (
    <div>
-    <h1>Books</h1>
+    <h1 className="text-2xl text-bold">Books</h1>
     <ul>
       {book.map((b) => {
          return (
-          <li key={b}>
+          <li onClick={() => router.push(`/bookInfo/${b.slug.current}`)} key={b}>
             {b.name}
           </li>
        )
